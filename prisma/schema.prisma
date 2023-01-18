@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id  Int @id @default(autoincrement())
+  name String
+  email String @unique
+  officeAddress String
+  officePhone String
+  contacts Contact[]
+}
+
+model Contact {
+  id  Int @id @default(autoincrement())
+  name String 
+  email String @unique
+  title String
+  personalAddress String
+  personalPhoneNumber String
+  contactOf Account @relation(fields: [accountId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  accountId Int
+}
+
